@@ -2,7 +2,7 @@
 	<div>
 		<h2> The Count is : {{ count }}</h2>
 		<p>
-			<button @click="count += 1">Add</button>
+			<button class="button is-primary" @click="count += 1">Add</button>
 		</p>
 	</div>
 </template>
