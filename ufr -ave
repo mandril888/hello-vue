@@ -1,0 +1,41 @@
+[33mcommit 14f7815843cccda9a8de84d752599266c86786c8[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 8 20:38:35 2017 +0200
+
+    getting info from films api
+
+[33mcommit 79e184cf18636d9b8d461abc47aa1d643b4ffb0c[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Fri Oct 6 20:16:01 2017 +0200
+
+    install bulma and sass package
+
+[33mcommit 421c3e664b464ffcf49adf2a9bd923cba8120073[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 1 14:23:27 2017 +0200
+
+    usieing axios to get a list of an api
+
+[33mcommit f0eff0d1a0a5da03a76ce805e4d7dc93834ff8b0[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 1 13:58:07 2017 +0200
+
+    add axios to the project to make ajax request
+
+[33mcommit 5606f8ed77022b71d63c5ec396148f120212c865[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 1 13:48:51 2017 +0200
+
+    adding a counter
+
+[33mcommit 5287a6154ebc1e773835bed4b5b4a1c0ffc4cd49[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 1 13:28:24 2017 +0200
+
+    importing a component to my App
+
+[33mcommit cd4a1fd11b9e67a5f8ffa407fae87a36f8cd6ee4[m
+Author: Arturo Rubio <arturo.rubio.89.8@gmail.com>
+Date:   Sun Oct 1 12:52:48 2017 +0200
+
+    first commit
