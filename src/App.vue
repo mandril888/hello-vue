@@ -81,6 +81,13 @@
 				</form>
 			</section>
 
+			<section class="section">
+				<h2>List of tasks</h2>
+				<ul>
+					<li v-for="task in allTasks">{{ task.taskName }} - {{ convertToDate(task.created_at) }}</li>
+				</ul>
+			</section>
+
 		</div>
 
 	</div>
@@ -90,6 +97,7 @@
 import Message from './components/Message.vue'
 import Counter from './components/Counter.vue'
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
 	name: 'app',
@@ -103,7 +111,8 @@ export default {
 			name: '',
 			filmsSearched: '',
 			taskName: '',
-			taskInfo: ''
+			taskInfo: '',
+			allTasks: this.$root.task
 		}
 	},
 	methods: {
@@ -116,8 +125,8 @@ export default {
 		postTask() {
 			if ( this.taskName && this.taskInfo ) {
 				this.$root.$firebaseRefs.task.push({
-					'taskInfo': this.taskName,
-					'taskName': this.taskInfo,
+					'taskName': this.taskName,
+					'taskInfo': this.taskInfo,
 					'created_at': -1 * new Date().getTime()
 				})
 				.then(this.$router.push('/'))
@@ -128,6 +137,11 @@ export default {
 			} else if ( !this.taskInfo ) {
 				alert('Add task info')
 			}
+		},
+		convertToDate(time) {
+			var dateFormat = require('dateformat');
+			var timeTask = new Date (parseInt(time.toString().slice(1)));
+			return moment(timeTask).format('hh:mm:ss - DD/MM/YY');
 		}
 	}
 }
