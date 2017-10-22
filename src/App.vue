@@ -27,7 +27,7 @@
 			<section class="section">
 				<form action="POST" @submit.prevent="onSubmit">
 					<div class="field">
-						<label class="label">Name</label>
+						<label class="label">Name of a film</label>
 						<div class="control has-icons-left has-icons-right">
 							<input class="input" type="text" placeholder="Text input" v-model="name">
 							<span class="icon is-small is-left">
@@ -53,6 +53,34 @@
 				</div>
 			</section>
 
+			<section class="section">
+				<form @submit.prevent="postTask">
+					<div class="field">
+						<label class="label">Task name</label>
+						<div class="control has-icons-left has-icons-right">
+							<input class="input" type="text" placeholder="Task name" v-model="taskName">
+							<span class="icon is-small is-left">
+								<i class="fa fa-user"></i>
+							</span>
+							<span class="icon is-small is-right">
+								<i class="fa fa-check"></i>
+							</span>
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">Task info</label>
+						<div class="control">
+							<textarea class="textarea" placeholder="Describes a task" v-model="taskInfo"></textarea>
+						</div>
+					</div>
+					<div class="field is-grouped">
+						<div class="control">
+							<button class="button is-primary">POST A TASK</button>
+						</div>
+					</div>
+				</form>
+			</section>
+
 		</div>
 
 	</div>
@@ -73,7 +101,9 @@ export default {
 			msg: 'Welcome to Your Vue.js App',
 			infoGet: '',
 			name: '',
-			filmsSearched: ''
+			filmsSearched: '',
+			taskName: '',
+			taskInfo: ''
 		}
 	},
 	methods: {
@@ -82,6 +112,22 @@ export default {
 		},
 		onSubmit() {
 			axios.get('https://api.themoviedb.org/3/search/movie?api_key=71bd8c83c5cc06c197435d2165ac52e4&query=' + this.name + '&language=es').then(response => this.filmsSearched = response.data.results)
+		},
+		postTask() {
+			if ( this.taskName && this.taskInfo ) {
+				this.$root.$firebaseRefs.task.push({
+					'taskInfo': this.taskName,
+					'taskName': this.taskInfo,
+					'created_at': -1 * new Date().getTime()
+				})
+				.then(this.$router.push('/'))
+			} else if ( !this.taskName && !this.taskInfo ) {
+				alert('Add task name and description')
+			} else if ( !this.taskName ) {
+				alert('Add task name')
+			} else if ( !this.taskInfo ) {
+				alert('Add task info')
+			}
 		}
 	}
 }
