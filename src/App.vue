@@ -54,7 +54,7 @@
 			</section>
 
 			<section class="section">
-				<form @submit.prevent="postTask">
+				<form @submit.prevent="postTask(taskName, taskInfo)">
 					<div class="field">
 						<label class="label">Task name</label>
 						<div class="control has-icons-left has-icons-right">
@@ -84,7 +84,14 @@
 			<section class="section">
 				<h2>List of tasks</h2>
 				<ul>
-					<li v-for="task in allTasks">{{ task.taskName }} - {{ convertToDate(task.created_at) }}</li>
+					<li v-for="task in allTasks">
+						{{ task.taskName }} - {{ convertToDate(task.created_at) }}
+						<a @click="removeTask(task['.key'])">
+							<span class="icon has-text-danger">
+								<i class="fa fa-ban"></i>
+							</span>
+						</a>
+					</li>
 				</ul>
 			</section>
 
@@ -98,6 +105,7 @@ import Message from './components/Message.vue'
 import Counter from './components/Counter.vue'
 import axios from 'axios'
 import moment from 'moment'
+import firebase from './service/firebase';
 
 export default {
 	name: 'app',
@@ -109,9 +117,9 @@ export default {
 			msg: 'Welcome to Your Vue.js App',
 			infoGet: '',
 			name: '',
-			filmsSearched: '',
 			taskName: '',
 			taskInfo: '',
+			filmsSearched: '',
 			allTasks: this.$root.task
 		}
 	},
@@ -122,26 +130,29 @@ export default {
 		onSubmit() {
 			axios.get('https://api.themoviedb.org/3/search/movie?api_key=71bd8c83c5cc06c197435d2165ac52e4&query=' + this.name + '&language=es').then(response => this.filmsSearched = response.data.results)
 		},
-		postTask() {
-			if ( this.taskName && this.taskInfo ) {
-				this.$root.$firebaseRefs.task.push({
-					'taskName': this.taskName,
-					'taskInfo': this.taskInfo,
-					'created_at': -1 * new Date().getTime()
+		postTask(a, b) {
+			if ( a && b ) {
+				firebase.database.ref('task').push({
+					'taskName': a,
+					'taskInfo': b,
+					'created_at': new Date().getTime()
 				})
 				.then(this.$router.push('/'))
-			} else if ( !this.taskName && !this.taskInfo ) {
+			} else if ( !a && !b ) {
 				alert('Add task name and description')
-			} else if ( !this.taskName ) {
+			} else if ( !a ) {
 				alert('Add task name')
-			} else if ( !this.taskInfo ) {
+			} else if ( !b ) {
 				alert('Add task info')
 			}
 		},
 		convertToDate(time) {
 			var dateFormat = require('dateformat');
-			var timeTask = new Date (parseInt(time.toString().slice(1)));
+			var timeTask = new Date (time);
 			return moment(timeTask).format('hh:mm:ss - DD/MM/YY');
+		},
+		removeTask(id) {
+			firebase.database.ref('task/' + id).remove();
 		}
 	}
 }
